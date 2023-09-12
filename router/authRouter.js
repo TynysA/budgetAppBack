@@ -3,8 +3,9 @@ const router = new Router();
 const authController = require("../controller/authController");
 const budgetController = require("../controller/budgetController");
 const { check } = require("express-validator");
-const authMiddleware = require('../middleware/authMiddleware')
-const roleMiddleware = require('../middleware/roleMiddleware');
+const authMiddleware = require("../middleware/authMiddleware");
+const roleMiddleware = require("../middleware/roleMiddleware");
+const upladMiddleware = require("../middleware/upload");
 
 router.post(
   "/registration",
@@ -18,6 +19,13 @@ router.post(
   authController.registration
 );
 router.post("/login", authController.login);
+router.post(
+  "/upload",
+  authMiddleware,
+  upladMiddleware.single("avatar"),
+  authController.upladAvatar
+);
 router.get("/users", roleMiddleware(["ADMIN"]), authController.getUsers);
+router.get("/user", authMiddleware, authController.getUser);
 
 module.exports = router;

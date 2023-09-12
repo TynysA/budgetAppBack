@@ -72,13 +72,35 @@ class authController {
       }
       const token = generateAccessToken(user._id, user.roles);
 
-      return res.json({ token, username });
+      return res.json({ token, user });
     } catch (e) {
       console.log(e);
       res.status(400).json({ message: "Login error" });
     }
   }
-
+  async upladAvatar(req, res) {
+    try {
+      console.log(req.file);
+      const userId = req.user.id;
+      const user = await User.findByIdAndUpdate(
+        userId,
+        { avatar: req.file.path },
+        { new: true }
+      );
+      res.json(user);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  async getUser(req, res) {
+    try {
+      const userId = req.user.id;
+      const user = await User.findOne({ _id: userId });
+      res.json(user);
+    } catch (e) {
+      console.log(e);
+    }
+  }
   async getUsers(req, res) {
     try {
       const users = await User.find();

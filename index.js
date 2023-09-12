@@ -1,4 +1,3 @@
-
 const express = require("express");
 const mongoose = require("mongoose");
 const authRouter = require("./router/authRouter");
@@ -16,9 +15,11 @@ const app = express();
 
 // Enable CORS for all routes
 app.use(cors());
-
 app.use(express.json());
+app.use("/uploads", express.static("uploads"));
+
 app.use("/auth", authRouter);
+
 app.use("/", budgetRouter);
 app.use("/income/category", incomeCategoriesRouter);
 app.use("/expense/category", expenseCategoriesRouter);
