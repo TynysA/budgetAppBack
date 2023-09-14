@@ -43,6 +43,29 @@ class expenseController {
       res.status(400).json({ message: "Somthing error" });
     }
   }
+  async updateExpensse(req, res) {
+    try {
+      console.log(req.body);
+      const actionId = req.body.actionId;
+      //findOneAndUpdate
+      const { title, category, amount, description, date } = req.body;
+      const test = await Expense.findOneAndUpdate(
+        { _id: actionId },
+        {
+          title: title,
+          category: category,
+          amount: amount,
+          description: description,
+          date: date,
+        },
+        { new: true }
+      );
+      res.json(test);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
   async deleteExpense(req, res) {
     try {
       const expenseId = req.params.expenseId;

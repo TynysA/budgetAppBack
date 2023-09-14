@@ -47,7 +47,31 @@ class incomeController {
       res.status(400).json({ message: "Somthing error" });
     }
   }
-
+  async updateIncome(req, res) {
+    try {
+      console.log("req.body");
+      console.log(req.body);
+      console.log("req.body end");
+      const actionId = req.body.actionId;
+      //findOneAndUpdate
+      const { title, category, amount, description, date } = req.body;
+      const test = await Income.findOneAndUpdate(
+        { _id: actionId },
+        {
+          title: title,
+          category:category,
+          amount: amount,
+          description: description,
+          date: date,
+        },
+        { new: true }
+      );
+      res.json(test);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
   async deleteIncome(req, res) {
     try {
       const incomeId = req.params.incomeId;

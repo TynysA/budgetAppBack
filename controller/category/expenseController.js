@@ -69,6 +69,29 @@ class ExpenseController {
       console.log(e);
     }
   }
+  async deleteUserExpenseCategory(req, res) {
+    try {
+      const userId = req.user.id;
+      const user = await User.findOne({ _id: userId });
+      const deleteCategory = req.body.categoryname;
+      let userExpenseCategories = user.userExpenseCategories;
+      for (let i = 0; i < userExpenseCategories.length; i++) {
+        let element = userExpenseCategories[i];
+        if (deleteCategory == element) {
+          let spliced = userExpenseCategories.splice(i, 1);
+          break;
+        }
+      }
+      const test = await User.findOneAndUpdate(
+        { _id: userId },
+        { userExpenseCategories: userExpenseCategories },
+        { new: true }
+      );
+      res.json(req.body);
+    } catch (e) {
+      console.log(e);
+    }
+  }
   async getUserExpenseCategories(req, res) {
     try {
       const userId = req.user.id;

@@ -15,5 +15,6 @@ router.post("/add", incomeCategoryController.addIncomeCategory);
 router.post("/edit/add", authMiddleware, incomeCategoryController.addUserIncomeCategories);
 router.get("/all", authMiddleware, incomeCategoryController.getIncomeCategories);
 router.get("/user/get", authMiddleware, incomeCategoryController.getUserIncomeCategories)
+router.post("/delete", authMiddleware, incomeCategoryController.deleteUserIncomeCategory)
 
 module.exports = router;

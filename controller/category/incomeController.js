@@ -64,6 +64,31 @@ class IncomeController {
       console.log(e);
     }
   }
+  async deleteUserIncomeCategory(req, res) {
+    try {
+      const userId = req.user.id;
+      const user = await User.findOne({ _id: userId });
+      const deleteCategory = req.body.categoryname;
+      //console.log(user.userIncomeCategories);
+      let userIncomeCategories = user.userIncomeCategories;
+      console.log(userIncomeCategories);
+      for (let i = 0; i < userIncomeCategories.length; i++) {
+        let element = userIncomeCategories[i];
+        if (deleteCategory == element) {
+          let spliced = userIncomeCategories.splice(i, 1);
+          break;
+        }
+      }
+      const test = await User.findOneAndUpdate(
+        { _id: userId },
+        { userIncomeCategories: userIncomeCategories },
+        { new: true }
+      );
+      res.json(req.body);
+    } catch (e) {
+      console.log(e);
+    }
+  }
   async getUserIncomeCategories(req, res) {
     try {
       const userId = req.user.id;

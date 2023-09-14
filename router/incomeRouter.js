@@ -8,6 +8,7 @@ const roleMiddleware = require('../middleware/roleMiddleware');
 
 router.get("/all", authMiddleware,  incomeController.getAllIncomes);
 router.post("/add", authMiddleware, incomeController.addIncome);
+router.post("/edit", authMiddleware, incomeController.updateIncome);
 router.delete('/:incomeId', incomeController.deleteIncome);
 
 module.exports = router;

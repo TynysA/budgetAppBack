@@ -8,5 +8,6 @@ const roleMiddleware = require("../middleware/roleMiddleware");
 
 router.get("/all", authMiddleware, expenseController.getAllExpense);
 router.post("/add", authMiddleware, expenseController.addExpense);
+router.post("/edit", authMiddleware, expenseController.updateExpensse);
 router.delete('/:expenseId', expenseController.deleteExpense);
 module.exports = router;
